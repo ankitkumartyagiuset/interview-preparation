@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}TalentPulse AI{% endblock %}</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom Style Sheet -->
+    <link rel="stylesheet" href="/static/css/styles.css">
+    {% block head %}{% endblock %}
+</head>
+<body class="dark-theme">
+    <header class="app-header">
+        <div class="header-container">
+            <a href="/dashboard" class="logo-area">
+                <img src="/static/img/logo.svg" alt="TalentPulse Logo" class="app-logo">
+                <span class="logo-text">Talent<span>Pulse</span> AI</span>
+            </a>
+            
+            <nav class="main-nav" id="mainNav">
+                <a href="/dashboard" class="nav-item {% block nav_dashboard %}{% endblock %}">
+                    <i class="fa-solid fa-chart-line"></i> Dashboard
+                </a>
+                <a href="/upload" class="nav-item {% block nav_upload %}{% endblock %}">
+                    <i class="fa-solid fa-cloud-arrow-up"></i> Upload Resume
+                </a>
+            </nav>
+
+            <div class="user-profile-menu">
+                <div class="user-info-trigger" onclick="toggleDropdown()">
+                    <img src="/static/img/ai_avatar.jpg" alt="Avatar" class="avatar-img">
+                    <span class="username" id="displayUsername">Candidate</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div class="dropdown-menu" id="profileDropdown">
+                    <div class="dropdown-header">
+                        <p class="user-email" id="displayEmail">loading...</p>
+                        <span class="role-badge" id="displayRole">Candidate</span>
+                    </div>
+                    <hr>
+                    <a href="#" class="dropdown-item" onclick="handleLogout(event)">
+                        <i class="fa-solid fa-right-from-bracket"></i> Logout
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="app-main-content">
+        <div class="content-container">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <footer class="app-footer">
+        <div class="footer-container">
+            <p>&copy; 2026 TalentPulse AI. All rights reserved. Preparedness assessments are indicators, not final hiring decisions.</p>
+        </div>
+    </footer>
+
+    <script src="/static/js/auth.js"></script>
+    <script>
+        // Dropdown toggle
+        function toggleDropdown() {
+            const dropdown = document.getElementById("profileDropdown");
+            dropdown.classList.toggle("show");
+        }
+
+        // Close dropdown when clicking outside
+        window.addEventListener('click', function(e) {
+            if (!document.querySelector('.user-profile-menu').contains(e.target)) {
+                const dropdown = document.getElementById("profileDropdown");
+                if (dropdown && dropdown.classList.contains("show")) {
+                    dropdown.classList.remove("show");
+                }
+            }
+        });
+    </script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

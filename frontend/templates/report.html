@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+
+{% block title %}Interview Report - TalentPulse AI{% endblock %}
+
+{% block content %}
+<div class="report-grid fade-in">
+    <!-- Scorecard banner -->
+    <div class="report-scorecard-card glass-card span-all">
+        <div class="scorecard-header">
+            <h2>Mock Interview Scorecard & Feedback</h2>
+            <p class="text-muted" id="reportDate">Completed on: loading...</p>
+        </div>
+        <div class="scorecard-stats-row">
+            <div class="overall-gauge-large">
+                <div class="score-num" id="overallScore">0%</div>
+                <div class="score-label" id="overallBand">Loading...</div>
+            </div>
+            
+            <div class="sub-categories-metrics">
+                <div class="metric-progress-item">
+                    <div class="metric-info">
+                        <span>Technical Knowledge</span>
+                        <span id="scoreTechnical">0%</span>
+                    </div>
+                    <div class="readiness-track"><div class="readiness-bar bg-violet" id="barTechnical" style="width: 0%"></div></div>
+                </div>
+
+                <div class="metric-progress-item">
+                    <div class="metric-info">
+                        <span>Project-based Knowledge</span>
+                        <span id="scoreProject">0%</span>
+                    </div>
+                    <div class="readiness-track"><div class="readiness-bar bg-cyan" id="barProject" style="width: 0%"></div></div>
+                </div>
+
+                <div class="metric-progress-item">
+                    <div class="metric-info">
+                        <span>Problem Solving</span>
+                        <span id="scoreProblem">0%</span>
+                    </div>
+                    <div class="readiness-track"><div class="readiness-bar bg-green" id="barProblem" style="width: 0%"></div></div>
+                </div>
+
+                <div class="metric-progress-item">
+                    <div class="metric-info">
+                        <span>Communication</span>
+                        <span id="scoreCommunication">0%</span>
+                    </div>
+                    <div class="readiness-track"><div class="readiness-bar bg-yellow" id="barCommunication" style="width: 0%"></div></div>
+                </div>
+
+                <div class="metric-progress-item">
+                    <div class="metric-info">
+                        <span>HR / Behavioral</span>
+                        <span id="scoreHR">0%</span>
+                    </div>
+                    <div class="readiness-track"><div class="readiness-bar bg-red" id="barHR" style="width: 0%"></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Left Column: Strengths, Weaknesses, Skill Gaps -->
+    <div class="report-left span-8">
+        <!-- Summary & Recommendation -->
+        <div class="glass-card pad-24">
+            <h3><i class="fa-solid fa-align-left text-violet"></i> Evaluation Summary</h3>
+            <p class="margin-top-12 leading-relaxed" id="reportSummary">Generating summary...</p>
+            
+            <h3 class="margin-top-24"><i class="fa-solid fa-clipboard-check text-green"></i> Key Recommendation</h3>
+            <p class="margin-top-12 leading-relaxed" id="reportRecommendation">Generating recommendation...</p>
+        </div>
+
+        <!-- Strengths / Weaknesses Split -->
+        <div class="flex-row gap-24 margin-top-24">
+            <div class="glass-card pad-24 flex-1 border-left-green">
+                <h3 class="text-green"><i class="fa-solid fa-circle-check"></i> Key Strengths</h3>
+                <ul class="feedback-bullets margin-top-12" id="strengthsList">
+                    <li>Analyzing your performance...</li>
+                </ul>
+            </div>
+            <div class="glass-card pad-24 flex-1 border-left-red">
+                <h3 class="text-red"><i class="fa-solid fa-circle-xmark"></i> Areas to Improve</h3>
+                <ul class="feedback-bullets margin-top-12" id="weaknessesList">
+                    <li>Analyzing your performance...</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Verified vs Claimed Skill Gaps Table -->
+        <div class="glass-card pad-24 margin-top-24">
+            <h3><i class="fa-solid fa-circle-nodes text-violet"></i> Competency Verification & Skill Gaps</h3>
+            <span class="text-muted text-sm">Comparison of skills claimed in your resume against your performance in this interview.</span>
+            <div class="table-responsive margin-top-16">
+                <table class="app-table">
+                    <thead>
+                        <tr>
+                            <th>Skill</th>
+                            <th>Required</th>
+                            <th>Claimed (Resume)</th>
+                            <th>Demonstrated (Interview)</th>
+                            <th>Gap Severity</th>
+                            <th>Priority</th>
+                        </tr>
+                    </thead>
+                    <tbody id="reportGapsTableBody">
+                        <tr><td colspan="6" class="text-center text-muted">Calculating skill gaps...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Question Review Accordions -->
+        <div class="glass-card pad-24 margin-top-24">
+            <h3><i class="fa-solid fa-clipboard-list text-cyan"></i> Question-by-Question Review</h3>
+            <span class="text-muted text-sm font-light">Inspect exact evaluations and feedback for each conversational turn.</span>
+            <div class="questions-accordion-list margin-top-16" id="questionsAccordion">
+                <!-- Dynamically populated questions/answers/evaluations -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Right Column: Personalized Roadmap -->
+    <div class="report-right span-4">
+        <div class="glass-card pad-24 h-100 flex-column border-top-cyan">
+            <div class="flex-header align-center justify-between border-bottom pad-bottom-16">
+                <div>
+                    <h3><i class="fa-solid fa-road text-cyan"></i> 7-Day Roadmap</h3>
+                    <span class="text-muted text-xs">Tailored day-by-day learning tasks</span>
+                </div>
+                <div class="roadmap-badge-completion" id="roadmapHeaderPercent">0%</div>
+            </div>
+            <div class="roadmap-scroll-pane flex-1 margin-top-16" id="roadmapScrollChecklist">
+                <!-- Dynamically populated daily roadmap items -->
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const INTERVIEW_ID = {{ interview_id }};
+</script>
+<script src="/static/js/report.js"></script>
+{% endblock %}
