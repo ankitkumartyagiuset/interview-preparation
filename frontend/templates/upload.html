@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block title %}Upload Resume - TalentPulse AI{% endblock %}
+
+{% block nav_upload %}active{% endblock %}
+
+{% block content %}
+<div class="upload-container">
+    <div class="glass-card pad-32 fade-in" id="uploadStep1">
+        <div class="section-title text-center">
+            <h2>Upload Your Resume</h2>
+            <p class="text-muted">Supported formats: PDF, DOC, DOCX, TXT (Max 10MB)</p>
+        </div>
+
+        <div class="drag-drop-zone" id="dropZone" onclick="triggerFileInput()">
+            <div class="zone-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+            <h3>Drag & Drop your file here</h3>
+            <p>or <span class="text-violet font-semibold">browse files</span> from your computer</p>
+            <input type="file" id="resumeFileInput" style="display: none;" accept=".pdf,.docx,.doc,.txt" onchange="handleFileSelect(event)">
+        </div>
+
+        <div class="upload-progress-container" id="uploadProgress" style="display: none;">
+            <div class="flex-row justify-between margin-bottom-8">
+                <span class="font-semibold text-sm" id="uploadFileName">resume.pdf</span>
+                <span class="text-muted text-sm" id="uploadPercent">0%</span>
+            </div>
+            <div class="readiness-track">
+                <div class="readiness-bar" id="uploadProgressBar" style="width: 0%"></div>
+            </div>
+            <p class="upload-status-text margin-top-8 text-center text-muted" id="uploadStatusText">Uploading file...</p>
+        </div>
+    </div>
+
+    <!-- Step 2: Parsed Result View and Edit Profile -->
+    <div class="glass-card pad-32 fade-in margin-top-24" id="parsedResultSection" style="display: none;">
+        <div class="flex-header align-center justify-between border-bottom pad-bottom-16">
+            <div>
+                <h2><i class="fa-solid fa-file-circle-check text-green"></i> Parsed Profile Results</h2>
+                <p class="text-muted">Verify the AI-extracted claims from your resume before saving</p>
+            </div>
+            <div>
+                <button class="btn btn-outline-violet margin-right-8" onclick="resetUpload()"><i class="fa-solid fa-rotate-left"></i> Start Over</button>
+                <button class="btn btn-primary" onclick="saveParsedProfile()"><i class="fa-solid fa-floppy-disk"></i> Confirm & Save</button>
+            </div>
+        </div>
+
+        <div class="parsed-profile-form margin-top-24">
+            <input type="hidden" id="parsedResumeId">
+            <div class="form-row">
+                <div class="form-group flex-2">
+                    <label for="profileName"><i class="fa-solid fa-user"></i> Full Name</label>
+                    <input type="text" id="profileName" class="form-control">
+                </div>
+                <div class="form-group flex-1">
+                    <label for="profilePhone"><i class="fa-solid fa-phone"></i> Phone</label>
+                    <input type="text" id="profilePhone" class="form-control">
+                </div>
+            </div>
+
+            <div class="form-row margin-top-12">
+                <div class="form-group flex-1">
+                    <label for="profileHeadline"><i class="fa-solid fa-heading"></i> Professional Headline</label>
+                    <input type="text" id="profileHeadline" class="form-control" placeholder="e.g. Full Stack Python Developer">
+                </div>
+            </div>
+
+            <div class="form-row margin-top-12">
+                <div class="form-group flex-1">
+                    <label for="profileSummary"><i class="fa-solid fa-align-left"></i> Summary</label>
+                    <textarea id="profileSummary" class="form-control" rows="3"></textarea>
+                </div>
+            </div>
+
+            <hr class="margin-y-24">
+
+            <!-- Skills Claim Verification Panel -->
+            <div class="profile-section-header">
+                <h3><i class="fa-solid fa-gem text-violet"></i> Extracted Claims (Skills)</h3>
+                <span class="text-muted text-sm">Review identified skills and claimed levels. We will use these to plan your custom interview.</span>
+            </div>
+
+            <div class="skills-claims-container margin-top-12">
+                <div class="skills-grid-header">
+                    <span>Skill Name</span>
+                    <span>Category</span>
+                    <span>Claimed Experience Level</span>
+                    <span>Years of Exp</span>
+                    <span>Actions</span>
+                </div>
+                <div id="skillsClaimsList">
+                    <!-- Dynamic Rows -->
+                </div>
+                <button class="btn btn-xs btn-outline-violet margin-top-12" onclick="addNewSkillClaimRow()">
+                    <i class="fa-solid fa-plus"></i> Add Skill Claim
+                </button>
+            </div>
+
+            <hr class="margin-y-24">
+
+            <!-- Projects claim Panel -->
+            <div class="profile-section-header">
+                <h3><i class="fa-solid fa-folder-open text-cyan"></i> Highlighted Projects</h3>
+                <span class="text-muted text-sm">Extracted project accomplishments.</span>
+            </div>
+            <div id="projectsList" class="margin-top-12">
+                <!-- Dynamic Projects -->
+            </div>
+            <button class="btn btn-xs btn-outline-cyan margin-top-12" onclick="addNewProjectRow()">
+                <i class="fa-solid fa-plus"></i> Add Project
+            </button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/upload.js"></script>
+{% endblock %}

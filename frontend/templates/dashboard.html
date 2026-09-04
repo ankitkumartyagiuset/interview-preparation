@@ -1,0 +1,196 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - TalentPulse AI{% endblock %}
+
+{% block nav_dashboard %}active{% endblock %}
+
+{% block content %}
+<div class="dashboard-grid">
+    <!-- Row 1: Welcome & Overview -->
+    <div class="dashboard-header-card glass-card span-all fade-in">
+        <div class="welcome-text">
+            <h2>Welcome back, <span id="dashboardUser">Candidate</span>!</h2>
+            <p>Here is your current career readiness overview and recommended actions.</p>
+        </div>
+        <div class="readiness-summary-widget">
+            <div class="readiness-gauge">
+                <div class="gauge-value" id="readinessScore">0%</div>
+                <div class="gauge-label" id="readinessBand">Not Started</div>
+            </div>
+            <div class="readiness-desc">
+                <h4>Readiness Indicator</h4>
+                <p>Based on your evaluated mock interviews compared against your target job roles.</p>
+                <div class="readiness-track">
+                    <div class="readiness-bar" id="readinessProgress" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Row 2: KPI Statistics Cards -->
+    <div class="kpi-card glass-card animate-slide-up" style="animation-delay: 0.1s;">
+        <div class="kpi-icon violet"><i class="fa-solid fa-microphone-lines"></i></div>
+        <div class="kpi-info">
+            <span class="kpi-value" id="totalInterviews">0</span>
+            <span class="kpi-label">Total Interviews</span>
+        </div>
+    </div>
+
+    <div class="kpi-card glass-card animate-slide-up" style="animation-delay: 0.2s;">
+        <div class="kpi-icon green"><i class="fa-solid fa-circle-check"></i></div>
+        <div class="kpi-info">
+            <span class="kpi-value" id="completedInterviews">0</span>
+            <span class="kpi-label">Completed Sessions</span>
+        </div>
+    </div>
+
+    <div class="kpi-card glass-card animate-slide-up" style="animation-delay: 0.3s;">
+        <div class="kpi-icon red"><i class="fa-solid fa-triangle-exclamation"></i></div>
+        <div class="kpi-info">
+            <span class="kpi-value" id="skillGapsCount">0</span>
+            <span class="kpi-label">Active Skill Gaps</span>
+        </div>
+    </div>
+
+    <div class="kpi-card glass-card animate-slide-up" style="animation-delay: 0.4s;">
+        <div class="kpi-icon cyan"><i class="fa-solid fa-map-location-dot"></i></div>
+        <div class="kpi-info">
+            <span class="kpi-value" id="roadmapProgress">0%</span>
+            <span class="kpi-label">Roadmap Progress</span>
+        </div>
+    </div>
+
+    <!-- Row 3: Main Dashboard Panels -->
+    <!-- Column Left: Skill Gaps and Resumes -->
+    <div class="dashboard-column-left span-8">
+        <!-- Priority Gaps -->
+        <div class="dashboard-panel glass-card">
+            <div class="panel-header">
+                <h3><i class="fa-solid fa-circle-nodes text-red"></i> Priority Skill Gaps</h3>
+                <span class="panel-subtitle">Areas needing immediate attention</span>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="app-table">
+                        <thead>
+                            <tr>
+                                <th>Skill</th>
+                                <th>Claimed</th>
+                                <th>Demonstrated</th>
+                                <th>Severity</th>
+                                <th>Priority</th>
+                            </tr>
+                        </thead>
+                        <tbody id="skillGapsTableBody">
+                            <tr>
+                                <td colspan="5" class="text-center text-muted">No interviews completed yet. Upload a resume and complete an interview to discover gaps.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resumes List -->
+        <div class="dashboard-panel glass-card margin-top-24">
+            <div class="panel-header flex-header">
+                <h3><i class="fa-solid fa-file-invoice text-violet"></i> Uploaded Resumes</h3>
+                <a href="/upload" class="btn btn-sm btn-outline-violet"><i class="fa-solid fa-plus"></i> Upload New</a>
+            </div>
+            <div class="panel-body">
+                <div class="resumes-list" id="resumesListContainer">
+                    <div class="text-center text-muted pad-16">Loading resumes...</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Job Roles / Target Roles Selections -->
+        <div class="dashboard-panel glass-card margin-top-24">
+            <div class="panel-header">
+                <h3><i class="fa-solid fa-briefcase text-cyan"></i> AI Mock Interview Launcher</h3>
+                <span class="panel-subtitle">Select a target role and matching resume to launch your mock interview</span>
+            </div>
+            <div class="panel-body">
+                <div class="launcher-form">
+                    <div class="form-row">
+                        <div class="form-group flex-1">
+                            <label for="selectResume"><i class="fa-solid fa-file-alt"></i> Selected Resume</label>
+                            <select id="selectResume" class="form-control">
+                                <option value="">-- Choose Uploaded Resume --</option>
+                            </select>
+                        </div>
+                        <div class="form-group flex-1">
+                            <label for="selectJobRole"><i class="fa-solid fa-users-gear"></i> Target Job Role</label>
+                            <select id="selectJobRole" class="form-control">
+                                <option value="">-- Choose Job Role --</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row margin-top-12">
+                        <div class="form-group flex-1">
+                            <label for="selectDifficulty"><i class="fa-solid fa-gauge-high"></i> Difficulty</label>
+                            <select id="selectDifficulty" class="form-control">
+                                <option value="beginner">Beginner</option>
+                                <option value="intermediate" selected>Intermediate</option>
+                                <option value="advanced">Advanced</option>
+                                <option value="expert">Expert</option>
+                            </select>
+                        </div>
+                        <div class="form-group flex-1">
+                            <label for="selectQuestions"><i class="fa-solid fa-list-ol"></i> Total Questions</label>
+                            <select id="selectQuestions" class="form-control">
+                                <option value="3">3 Questions (Quick Practice)</option>
+                                <option value="5" selected>5 Questions (Standard)</option>
+                                <option value="8">8 Questions (Comprehensive)</option>
+                                <option value="10">10 Questions (Deep Dive)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-block margin-top-16" onclick="launchCustomInterview()">
+                        Generate AI Custom Interview <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Column Right: Active Roadmap & Recent Interviews -->
+    <div class="dashboard-column-right span-4">
+        <!-- Active Roadmap -->
+        <div class="dashboard-panel glass-card h-100 flex-column">
+            <div class="panel-header">
+                <h3><i class="fa-solid fa-road text-cyan"></i> Active Roadmap</h3>
+                <span class="panel-subtitle" id="roadmapTitle">No active roadmap</span>
+            </div>
+            <div class="panel-body flex-1 flex-column justify-between">
+                <div class="roadmap-checklist flex-1" id="roadmapChecklist">
+                    <div class="text-center text-muted pad-16">Complete an interview session to generate a 7-day learning roadmap.</div>
+                </div>
+                <div class="roadmap-footer" id="roadmapFooter" style="display: none;">
+                    <hr>
+                    <div class="flex-row justify-between align-center">
+                        <span class="text-muted text-sm" id="roadmapFooterText">0 of 7 items completed</span>
+                        <a href="#" id="roadmapReportLink" class="btn btn-xs btn-outline-cyan">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Recent Interviews -->
+        <div class="dashboard-panel glass-card margin-top-24">
+            <div class="panel-header">
+                <h3><i class="fa-solid fa-history text-muted"></i> Recent Interviews</h3>
+            </div>
+            <div class="panel-body">
+                <div class="recent-interviews" id="recentInterviewsContainer">
+                    <div class="text-center text-muted pad-16">No interview sessions found.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/dashboard.js"></script>
+{% endblock %}

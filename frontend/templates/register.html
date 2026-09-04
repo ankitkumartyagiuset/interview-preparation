@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - TalentPulse AI</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body class="auth-page dark-theme">
+    <div class="auth-wrapper">
+        <div class="auth-card glass-card fade-in">
+            <div class="auth-logo-area">
+                <img src="/static/img/logo.svg" alt="TalentPulse Logo" class="auth-logo">
+                <h1>Create Account</h1>
+                <p>Start your AI-driven interview readiness journey today</p>
+            </div>
+            
+            <div class="auth-body">
+                <div class="alert-container" id="alertContainer"></div>
+                <form id="registerForm" onsubmit="submitRegister(event)">
+                    <div class="form-group">
+                        <label for="fullName"><i class="fa-solid fa-user"></i> Full Name</label>
+                        <input type="text" id="fullName" required placeholder="John Doe">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email"><i class="fa-solid fa-envelope"></i> Email Address</label>
+                        <input type="email" id="email" required placeholder="name@company.com" autocomplete="email">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password"><i class="fa-solid fa-lock"></i> Password</label>
+                        <input type="password" id="password" required placeholder="Min 6 characters" autocomplete="new-password">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="role"><i class="fa-solid fa-user-tag"></i> Profile Role</label>
+                        <select id="role" class="form-control">
+                            <option value="candidate">Candidate (Practice & Gaps)</option>
+                            <option value="admin">Administrator (Admin Tools)</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block btn-pulse">
+                        Sign Up <i class="fa-solid fa-user-plus"></i>
+                    </button>
+                </form>
+            </div>
+            
+            <div class="auth-footer">
+                <p>Already have an account? <a href="/login">Sign In</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/auth.js"></script>
+    <script>
+        async function submitRegister(e) {
+            e.preventDefault();
+            const fullName = document.getElementById("fullName").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const role = document.getElementById("role").value;
+            const alertContainer = document.getElementById("alertContainer");
+            
+            alertContainer.innerHTML = '';
+            
+            try {
+                const response = await fetch("/api/v1/auth/register", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        email,
+                        password,
+                        full_name: fullName,
+                        role
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(data.detail || "Registration failed. Try a different email.");
+                }
+                
+                // Redirect on success
+                window.location.href = "/dashboard";
+            } catch (err) {
+                alertContainer.innerHTML = `
+                    <div class="alert alert-danger animate-shake">
+                        <i class="fa-solid fa-circle-exclamation"></i> ${err.message}
+                    </div>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>

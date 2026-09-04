@@ -1,0 +1,359 @@
+PRODUCT REQUIREMENTS DOCUMENTAI Resume-Based Interview & Skill Gap Platform
+Version 1.0  |  Product Type: AI-powered CareerTech / EdTechPrimary Users: Students, Freshers, Job Seekers, Colleges, Recruiters
+
+1. Product Overview
+The platform accepts a candidate's resume, analyses skills, education, projects, certifications and experience, and creates a personalised interview. The AI conducts HR, technical, project and role-specific questions, adapts follow-up questions based on answers, evaluates performance, identifies skill gaps, and generates a personalised improvement roadmap and interview-readiness report.
+2. Problem Statement
+Most interview-preparation platforms use generic question sets and do not reflect the candidate's actual resume or target role. Candidates therefore struggle to understand whether they can defend the claims on their resume, what an interviewer is likely to ask, which skills are weak, and what they should improve before a real interview.
+The product solves this by creating a closed loop: Resume → Personalised Interview → Evidence-based Evaluation → Skill Gap Analysis → Improvement Roadmap → Reassessment.
+3. Product Goals
+Automatically extract a structured candidate profile from a resume.
+Generate a personalised interview based on resume evidence and target job role.
+Conduct adaptive HR, technical, project and behavioural interviews.
+Evaluate answers using transparent, structured rubrics.
+Detect gaps between claimed and demonstrated skills.
+Provide actionable learning and practice recommendations.
+Track readiness and improvement across multiple interview attempts.
+Provide a detailed final report without making an automated hiring decision.
+4. Target Users
+User
+Primary Need
+Student / Fresher
+Practice interviews and discover skill gaps.
+Experienced Candidate
+Validate technical and project readiness for a target role.
+College / Placement Cell
+Run scalable mock interviews and track student readiness.
+Recruiter
+Screen candidates against a defined role using structured assessments.
+5. Core User Journey
+Register / Login
+Upload Resume
+Parse and structure resume data
+Select target job role or upload Job Description
+Generate interview blueprint
+Start interview
+Ask question → receive answer → evaluate → generate follow-up
+Complete interview
+Generate scorecard and skill-gap analysis
+Generate personalised improvement roadmap
+View report and track progress
+6. Resume Upload & Parsing
+Supported formats
+PDF
+DOC
+DOCX
+Future: image resumes and LinkedIn import
+Data to extract
+Personal information
+Education
+Programming languages
+Frameworks and tools
+Projects
+Internships
+Work experience
+Certifications
+Courses
+Achievements
+Resume Evidence Model
+The system should distinguish between information explicitly present in the resume and information inferred by AI. Claims such as 'Expert in Python' should be treated as claims to validate rather than facts.
+7. Resume Claim Verification
+The AI should test important resume claims through targeted questions. Example: if a candidate claims expert Python knowledge, the system may ask about decorators, generators, concurrency or a relevant production use case. The report can show claimed level versus demonstrated level with a confidence indicator.
+8. Job Role & Job Description
+Allow manual role selection.
+Allow Job Description upload.
+Map resume skills against job requirements.
+Prioritise interview topics according to role relevance and required competencies.
+Example roles: Software Developer, Python Developer, Java Developer, Web Developer, Data Analyst, Data Scientist, AI/ML Engineer, Cybersecurity, Network Engineer and Cloud Engineer.
+9. Interview Blueprint
+Dimension
+Example Weight
+Technical Knowledge
+30%
+Projects / Experience
+20%
+Problem Solving
+20%
+Communication
+10%
+Behavioural / HR
+10%
+Role-specific competencies
+10%
+Weights must be configurable by role and interview template rather than hard-coded globally.
+10. Interview Types
+HR Interview
+Technical Interview
+Project-based Interview
+Behavioural Interview
+Role-specific Interview
+Mixed Interview
+Future: coding assessment and voice interview
+11. Adaptive Difficulty
+Difficulty should change according to demonstrated performance. Strong answers can trigger deeper questions; weak answers can trigger clarification, conceptual questions or a lower difficulty level. The goal is to estimate competence rather than simply maximise difficulty.
+12. Dynamic Follow-up Engine
+The interview should not behave like a fixed questionnaire. Follow-up questions must use the candidate's previous answer and resume evidence. Example: a Django project claim can lead from architecture → scaling → caching → database bottlenecks → production debugging.
+13. Voice Interview — Future Module
+Voice mode can use Speech-to-Text for candidate answers and Text-to-Speech for AI questions. Evaluation should focus on answer content and relevant communication criteria, not accent or regional pronunciation.
+14. Answer Evaluation
+Dimension
+Scale
+Correctness
+0–10
+Technical Depth
+0–10
+Relevance
+0–10
+Clarity
+0–10
+Problem Solving
+0–10
+Communication
+0–10
+Evaluation should use structured rubrics and evidence from the answer. For coding questions, deterministic tests should be preferred over LLM-only judgement wherever possible.
+15. Overall Score
+Area
+Example Result
+Technical
+82%
+Projects
+76%
+Problem Solving
+71%
+Communication
+84%
+HR / Behavioural
+88%
+Overall
+80.2%
+16. Skill Gap Analysis
+The system compares required competencies, resume evidence and interview evidence to estimate demonstrated skill level.
+Skill
+Resume Claim
+Interview Evidence
+Gap
+Python
+Advanced
+Intermediate
+Medium
+SQL
+Intermediate
+Beginner
+High
+Django
+Advanced
+Advanced
+Low
+React
+Intermediate
+Beginner
+High
+17. Personalised Improvement Roadmap
+The platform should convert weaknesses into concrete actions rather than simply reporting a low score.
+Identify current level and target level.
+Assign priority.
+Recommend concepts and practice.
+Recommend mini-projects where useful.
+Schedule a reassessment / mock interview.
+Example SQL roadmap: SELECT and filtering → JOINs → aggregation → subqueries → indexes → query optimisation → mock SQL interview.
+18. Recommendation Engine
+Learning topics
+Interview questions
+Coding/problem-solving practice
+Project ideas
+Targeted revision
+Repeat interview after improvement
+19. Candidate Report
+Candidate name and target role
+Overall readiness score
+Technical score
+Communication score
+Project knowledge score
+Problem-solving score
+Strengths
+Weaknesses
+Verified vs claimed skills
+Priority skill gaps
+Improvement roadmap
+Recommended next interview
+20. Readiness Indicator
+Score
+Indicative Level
+0–39
+Not Ready
+40–59
+Beginner
+60–74
+Developing
+75–89
+Interview Ready
+90–100
+Highly Ready
+These bands are preparation indicators, not objective hiring decisions. Thresholds should be configurable and validated using real evaluation data before being presented as predictive hiring metrics.
+21. Candidate Dashboard
+Current interview-readiness score
+Skill-level visualisation
+Top strengths
+Priority gaps
+Interview history
+Progress over time
+Recommended next actions
+22. Progress Tracking
+Store every completed interview as a versioned assessment so candidates can see whether their performance improves after following the roadmap.
+23. Admin Panel
+User management
+Interview management
+Question bank
+Skills taxonomy
+Job roles
+Interview templates
+AI configuration
+Reports and analytics
+Subscription management
+Audit logs
+24. Question Bank
+Field
+Purpose
+Question
+Question text
+Category
+HR / technical / project / behavioural
+Skill
+Competency being tested
+Difficulty
+Beginner / intermediate / advanced / expert
+Evaluation Criteria
+Expected evidence
+Follow-up Rules
+Conditions for deeper questions
+Job Role
+Relevant role(s)
+25. Recommended Technical Architecture
+For an initial production-oriented implementation, use a web frontend with a Python API backend, a relational database, secure object storage for resumes, Redis for caching/queues, background workers for long-running jobs, and an LLM service behind a controlled AI orchestration layer.
+Frontend: HTML, CSS, JavaScript, Bootstrap/jQuery for the initial version.
+Backend: Python + FastAPI for API-first architecture; Django + DRF is an alternative when the project needs a heavier built-in admin ecosystem.
+Database: PostgreSQL.
+Cache / queue: Redis.
+Background processing: Celery or an equivalent worker system.
+Object storage: private bucket/storage for resumes and reports.
+AI layer: separate services/prompts for extraction, interview planning, question generation, evaluation, skill-gap analysis and roadmap generation.
+26. AI Architecture
+Do not implement the entire product as one giant LLM prompt. Use modular components with structured inputs and outputs.
+Resume Parser
+Profile Extractor
+Interview Planner
+Question Generator
+Follow-up Generator
+Answer Evaluator
+Skill Gap Analyzer
+Roadmap Generator
+Report Generator
+27. Data Model
+users
+resumes
+candidate_profiles
+skills
+projects
+experiences
+job_roles
+job_descriptions
+interviews
+questions
+answers
+evaluations
+skill_gaps
+roadmaps
+reports
+subscriptions
+audit_logs
+28. Security Requirements
+HTTPS everywhere.
+Secure password hashing.
+Strong authentication and authorisation.
+Private resume storage with signed/controlled access.
+File type and size validation.
+Malware scanning for uploaded documents.
+Rate limiting and abuse prevention.
+Audit logging for sensitive actions.
+Least-privilege access.
+Secure deletion and retention controls.
+29. Privacy Requirements
+Explain why resume and interview data are collected.
+Provide retention and deletion controls.
+Restrict who can access candidate data.
+Do not expose resumes through public URLs.
+Minimise sensitive/personal attributes in AI evaluation.
+Provide appropriate consent and privacy notices.
+30. Bias & Fairness Controls
+The evaluation pipeline should not use gender, religion, caste, age, accent, location, college prestige or other irrelevant personal characteristics as competence signals. Scoring should be based on job-relevant evidence such as technical correctness, reasoning, relevant experience and answer quality. Human review should remain available for high-impact hiring workflows.
+31. Performance & Scalability
+Keep normal API operations low-latency.
+Use asynchronous processing for resume parsing and long AI jobs.
+Stream interview responses where supported.
+Cache safe reusable data such as skill taxonomies and static question metadata.
+Scale backend instances horizontally behind a load balancer.
+Use connection pooling and indexed database queries.
+Monitor AI latency, token usage, failures and queue depth.
+Do not promise a fixed sub-500 ms latency for LLM-generated responses; model/provider latency is variable. Set separate SLOs for ordinary APIs and AI operations.
+32. MVP Scope
+Registration and login
+Resume upload
+Resume parsing
+Skill extraction
+Target role selection
+AI interview generation
+Text-based adaptive interview
+Answer evaluation
+Scorecard
+Skill-gap analysis
+Improvement roadmap
+Interview history
+MVP should deliberately exclude a large recruiter marketplace, advanced voice analytics and excessive feature breadth until the core interview-evaluation loop is reliable.
+33. Version 2
+Voice interview
+Job Description upload and resume-to-JD matching
+Coding assessment
+Code execution and deterministic evaluation
+Advanced analytics
+Progress tracking
+Certificates / completion records
+34. Version 3 — Enterprise
+College / placement dashboard
+Recruiter dashboard
+Candidate pools
+Custom interview templates
+Organisation analytics
+Multi-tenant architecture
+SSO
+Role-based access control
+Enterprise audit and retention controls
+35. Success Metrics
+Category
+Metrics
+Engagement
+Interviews per user, completion rate, resume uploads
+Learning
+Score improvement, skill-gap closure, reassessment rate
+Quality
+Question relevance, evaluation consistency, follow-up relevance
+Business
+Retention, free-to-paid conversion, institutional adoption
+36. Major Product Risks & Mitigations
+Risk
+Mitigation
+Incorrect AI evaluation
+Structured rubrics, calibration datasets, deterministic checks where possible, human review.
+Resume hallucination
+Separate explicit resume evidence from AI inference.
+Bias
+Remove irrelevant personal attributes from scoring and audit outcomes.
+High AI cost
+Model routing, caching, batching and usage limits.
+Data leakage
+Private storage, access controls, encryption and secure deletion.
+Over-reliance on a readiness score
+Show evidence and feedback; clearly label score as an assessment indicator.
+37. Product Vision
+The long-term product should become a continuous career-readiness engine rather than a simple chatbot: Resume → Job Match → Adaptive Interview → Evidence-based Evaluation → Skill Gap → Personalised Learning → Reassessment → Measurable Progress.
+38. One-line Product Definition
+An AI-powered career platform that transforms a candidate's resume into a personalised interview, evaluates job-relevant readiness, identifies skill gaps, and provides a data-driven improvement roadmap.

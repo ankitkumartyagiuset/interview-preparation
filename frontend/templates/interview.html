@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block title %}Mock Interview - TalentPulse AI{% endblock %}
+
+{% block content %}
+<div class="interview-layout">
+    <!-- Sidebar: Status & Progress -->
+    <div class="interview-sidebar glass-card fade-in">
+        <div class="sidebar-header border-bottom pad-bottom-16">
+            <h3 id="interviewTitle">Mock Interview</h3>
+            <span class="badge badge-outline-cyan" id="interviewDifficulty">Intermediate</span>
+        </div>
+        
+        <div class="sidebar-progress margin-top-24">
+            <h4>Question Progress</h4>
+            <div class="progress-steps-list" id="progressStepsList">
+                <!-- Dynamic steps will be injected here -->
+            </div>
+        </div>
+
+        <div class="sidebar-tips margin-top-24 border-top pad-top-16">
+            <h4><i class="fa-solid fa-lightbulb text-violet"></i> Pro Tips:</h4>
+            <ul>
+                <li>Be specific and describe evidence-based claims.</li>
+                <li>Use the STAR method (Situation, Task, Action, Result) for behavioral questions.</li>
+                <li>If asked code/logic, outline your thought process explicitly.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Main Panel: The Chat Conversational Arena -->
+    <div class="interview-chat-container glass-card fade-in">
+        <div class="chat-header border-bottom">
+            <div class="ai-agent-identity">
+                <img src="/static/img/ai_avatar.jpg" alt="AI Interviewer" class="ai-avatar-medium">
+                <div>
+                    <h3 class="font-semibold">Iris</h3>
+                    <span class="text-xs text-muted"><i class="fa-solid fa-circle text-green text-xs"></i> AI Interview Panelist</span>
+                </div>
+            </div>
+            <div class="timer-widget">
+                <i class="fa-solid fa-stopwatch text-violet"></i>
+                <span id="interviewStopwatch">00:00</span>
+            </div>
+        </div>
+
+        <!-- Chat messages view -->
+        <div class="chat-messages-viewport" id="chatViewport">
+            <!-- Messages dynamic -->
+            <div class="chat-message ai">
+                <div class="avatar-col">
+                    <img src="/static/img/ai_avatar.jpg" alt="AI" class="ai-avatar-small">
+                </div>
+                <div class="message-bubble-col">
+                    <div class="bubble">
+                        Hello! I am Iris, your AI interviewer today. I am planning a customized interview session based on your resume. Click the button below when you are ready to begin!
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Start Trigger Cover -->
+        <div class="chat-action-cover text-center pad-24 border-top" id="startCover">
+            <button class="btn btn-primary btn-lg btn-pulse" onclick="beginInterview()">
+                Start Interview Session <i class="fa-solid fa-play"></i>
+            </button>
+        </div>
+
+        <!-- Text input area -->
+        <div class="chat-input-panel border-top" id="chatInputArea" style="display: none;">
+            <form id="answerSubmitForm" onsubmit="submitAnswer(event)" class="flex-column w-100">
+                <div class="input-actions-row">
+                    <span class="word-counter" id="wordCountText">Words: 0 (Min recommended: 20)</span>
+                    <span class="text-muted text-sm"><i class="fa-solid fa-keyboard"></i> Type your detailed answer below</span>
+                </div>
+                <textarea id="answerTextarea" required placeholder="Type your response here..." oninput="onAnswerInput()"></textarea>
+                <div class="input-buttons-row justify-between margin-top-12">
+                    <button type="button" class="btn btn-outline-danger" onclick="confirmAbandon()"><i class="fa-solid fa-triangle-exclamation"></i> Quit</button>
+                    <button type="submit" class="btn btn-primary" id="btnSubmitAnswer">
+                        Submit Answer <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+        
+        <div class="chat-loader-panel border-top pad-24 text-center" id="chatLoaderPanel" style="display: none;">
+            <div class="pulse-spinner"></div>
+            <p class="text-muted margin-top-12 font-medium" id="loaderText">Iris is analyzing your response and preparing the next question...</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const INTERVIEW_ID = {{ interview_id }};
+</script>
+<script src="/static/js/interview.js"></script>
+{% endblock %}
