@@ -15,8 +15,8 @@ PyJWT==2.8.1
 cryptography==41.0.7
 
 # Pydantic (Data Validation)
-pydantic==2.5.0
-pydantic-settings==2.1.0
+pydantic==2.13.5
+pydantic-settings==2.15.0
 
 # Async
 httpx==0.25.2
