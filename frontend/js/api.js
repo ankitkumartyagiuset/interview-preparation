@@ -1,5 +1,6 @@
 // API Configuration
-const API_BASE_URL = window.location.origin + '/api';
+const configuredApiUrl = window.APP_CONFIG?.API_BASE_URL || window.location.origin;
+const API_BASE_URL = `${configuredApiUrl.replace(/\/$/, '')}/api`;
 
 // API Client
 class APIClient {

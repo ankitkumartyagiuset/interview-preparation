@@ -265,6 +265,33 @@ ANTHROPIC_MODEL=claude-3-sonnet-20240229
 
 ## Production Deployment
 
+### Render Backend and Vercel Frontend
+
+The repository includes `render.yaml` for the FastAPI service, PostgreSQL, and
+Redis. In Render, create a Blueprint from this repository and set the
+`CORS_ORIGINS` environment variable to the deployed Vercel URL, for example:
+
+```env
+CORS_ORIGINS=["https://your-app.vercel.app"]
+```
+
+The Blueprint sets `PYTHON_VERSION=3.11.9` and runs `alembic upgrade head`
+before starting the service. This keeps the locked Pydantic dependencies on a
+Python version with published wheels instead of attempting a Rust build in
+Render's build environment. If configuring the service manually, set the same
+`PYTHON_VERSION` environment variable and use the `backend` root directory.
+
+For Vercel, create a project with `frontend` as its Root Directory and deploy
+it as a static site. Before deploying, replace the placeholder URL in
+`frontend/config.js` with the public Render backend URL:
+
+```js
+API_BASE_URL: 'https://your-api.onrender.com'
+```
+
+The frontend appends `/api` automatically. Deploy the frontend after the
+backend so its Vercel URL can be added to Render's `CORS_ORIGINS` setting.
+
 ### Docker Production Build
 ```bash
 docker build -f docker/Dockerfile.prod -t interview-platform:latest .
