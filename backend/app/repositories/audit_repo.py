@@ -1,6 +1,6 @@
 from typing import Optional, List, Dict, Any
 from sqlalchemy.orm import Session
-from backend.app.models.audit_log import AuditLog
+from app.models.audit_log import AuditLog
 
 class AuditRepository:
     def __init__(self, db: Session):

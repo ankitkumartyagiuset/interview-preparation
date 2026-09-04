@@ -4,11 +4,11 @@ import hashlib
 from typing import Optional, Dict, Any, List
 from fastapi import UploadFile, HTTPException, status
 from sqlalchemy.orm import Session
-from backend.app.core.config import settings
-from backend.app.repositories.resume_repo import ResumeRepository
-from backend.app.repositories.audit_repo import AuditRepository
-from backend.app.ai.engines.resume_parser import resume_parser_engine
-from backend.app.models.resume import Resume, CandidateProfile
+from app.core.config import settings
+from app.repositories.resume_repo import ResumeRepository
+from app.repositories.audit_repo import AuditRepository
+from app.ai.engines.resume_parser import resume_parser_engine
+from app.models.resume import Resume, CandidateProfile
 
 class ResumeService:
     def __init__(self, db: Session):

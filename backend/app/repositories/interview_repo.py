@@ -1,7 +1,7 @@
 from typing import Optional, List, Dict, Any
 from datetime import datetime, timezone
 from sqlalchemy.orm import Session
-from backend.app.models.interview import (
+from app.models.interview import (
     Interview,
     InterviewQuestion,
     InterviewAnswer,

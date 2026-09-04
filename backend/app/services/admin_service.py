@@ -1,13 +1,13 @@
 from typing import Dict, Any, List
 from sqlalchemy.orm import Session
 from sqlalchemy import func
-from backend.app.models.user import User
-from backend.app.models.resume import Resume
-from backend.app.models.interview import Interview
-from backend.app.models.skill_gap import SkillGap
-from backend.app.models.audit_log import AuditLog
-from backend.app.repositories.user_repo import UserRepository
-from backend.app.repositories.audit_repo import AuditRepository
+from app.models.user import User
+from app.models.resume import Resume
+from app.models.interview import Interview
+from app.models.skill_gap import SkillGap
+from app.models.audit_log import AuditLog
+from app.repositories.user_repo import UserRepository
+from app.repositories.audit_repo import AuditRepository
 
 class AdminService:
     def __init__(self, db: Session):

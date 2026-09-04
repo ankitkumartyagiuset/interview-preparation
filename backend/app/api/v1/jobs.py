@@ -1,15 +1,15 @@
 from typing import List, Optional
 from fastapi import APIRouter, Depends, status, HTTPException
 from sqlalchemy.orm import Session
-from backend.app.core.database import get_db
-from backend.app.core.security import get_current_user_id_and_role
-from backend.app.schemas.job import (
+from app.core.database import get_db
+from app.core.security import get_current_user_id_and_role
+from app.schemas.job import (
     JobRoleResponse,
     JobDescriptionResponse,
     JobDescriptionCreate,
     JobMatchAnalysis
 )
-from backend.app.services.job_service import JobService
+from app.services.job_service import JobService
 
 router = APIRouter(prefix="/jobs", tags=["Jobs & Job Descriptions"])
 

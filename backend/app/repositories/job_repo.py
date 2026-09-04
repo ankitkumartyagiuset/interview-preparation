@@ -1,6 +1,6 @@
 from typing import Optional, List, Dict, Any
 from sqlalchemy.orm import Session
-from backend.app.models.job import JobRole, JobDescription
+from app.models.job import JobRole, JobDescription
 
 class JobRepository:
     def __init__(self, db: Session):

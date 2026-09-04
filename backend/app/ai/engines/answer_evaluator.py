@@ -1,6 +1,6 @@
 from typing import Dict, Any, Optional
-from backend.app.ai.gateway import ai_gateway
-from backend.app.ai.prompts.evaluation_prompts import EVALUATION_SYSTEM_PROMPT, build_answer_evaluation_prompt
+from app.ai.gateway import ai_gateway
+from app.ai.prompts.evaluation_prompts import EVALUATION_SYSTEM_PROMPT, build_answer_evaluation_prompt
 
 class AnswerEvaluatorEngine:
     """Evaluates candidate answers against multi-dimensional rubrics and extracts evidence citations."""

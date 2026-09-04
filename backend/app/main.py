@@ -4,10 +4,17 @@ from fastapi.responses import JSONResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 from contextlib import asynccontextmanager
 import os
+from sqlalchemy import text
 from app.core.config import settings
-from app.core.database import init_db
 from app.core.redis import init_redis
 from app.api import auth, resumes, jobs, interviews, reports, dashboard
+from app.api.v1 import admin as v1_admin
+from app.api.v1 import auth as v1_auth
+from app.api.v1 import dashboard as v1_dashboard
+from app.api.v1 import interviews as v1_interviews
+from app.api.v1 import jobs as v1_jobs
+from app.api.v1 import reports as v1_reports
+from app.api.v1 import resumes as v1_resumes
 
 
 @asynccontextmanager
@@ -16,43 +23,19 @@ async def lifespan(app: FastAPI):
     # Startup
     print("Starting application...")
 
-    # Initialize database
-    try:
-        init_db()
-        print("Database initialized")
-    except Exception as e:
-        print(f"Database initialization failed: {e}")
-
     # Initialize Redis
-    try:
-        init_redis()
-        print("Redis initialized")
-    except Exception as e:
-        print(f"Redis initialization warning: {e}")
+    init_redis()
+    print("Redis initialized")
 
     # Create storage directories
     os.makedirs(settings.STORAGE_PATH, exist_ok=True)
 
     # Seed initial data
     from app.core.database import SessionLocal
-    from app.models import JobRole, User, UserRole
-    from app.security.auth import get_password_hash
+    from app.models import JobRole
 
     db = SessionLocal()
     try:
-        # Create admin user if not exists
-        admin = db.query(User).filter(User.email == settings.ADMIN_EMAIL).first()
-        if not admin:
-            admin = User(
-                email=settings.ADMIN_EMAIL,
-                hashed_password=get_password_hash(settings.ADMIN_PASSWORD),
-                full_name="Admin User",
-                role=UserRole.ADMIN,
-                is_active=True
-            )
-            db.add(admin)
-            print(f"Admin user created: {settings.ADMIN_EMAIL}")
-
         # Create sample job roles if not exist
         if db.query(JobRole).count() == 0:
             job_roles = [
@@ -101,9 +84,9 @@ async def lifespan(app: FastAPI):
             print("Sample job roles created")
 
         db.commit()
-    except Exception as e:
-        print(f"Seeding error: {e}")
+    except Exception:
         db.rollback()
+        raise
     finally:
         db.close()
 
@@ -129,6 +112,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
+@app.middleware("http")
+async def add_security_headers(request: Request, call_next):
+    response = await call_next(request)
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["X-Frame-Options"] = "DENY"
+    response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+    return response
+
 # Include API routers
 app.include_router(auth.router, prefix=settings.API_PREFIX)
 app.include_router(resumes.router, prefix=settings.API_PREFIX)
@@ -136,6 +128,17 @@ app.include_router(jobs.router, prefix=settings.API_PREFIX)
 app.include_router(interviews.router, prefix=settings.API_PREFIX)
 app.include_router(reports.router, prefix=settings.API_PREFIX)
 app.include_router(dashboard.router, prefix=settings.API_PREFIX)
+
+for router in (
+    v1_auth.router,
+    v1_resumes.router,
+    v1_jobs.router,
+    v1_interviews.router,
+    v1_reports.router,
+    v1_dashboard.router,
+    v1_admin.router,
+):
+    app.include_router(router, prefix=f"{settings.API_PREFIX}/v1")
 
 # Mount static files for frontend
 frontend_path = os.path.join(os.path.dirname(__file__), "..", "frontend")
@@ -147,6 +150,20 @@ if os.path.exists(frontend_path):
 async def health_check():
     """Health check endpoint"""
     return {"status": "healthy", "version": settings.APP_VERSION}
+
+
+@app.get("/ready")
+async def readiness_check():
+    """Report whether the application dependencies are available."""
+    from app.core.database import SessionLocal
+
+    db = SessionLocal()
+    try:
+        db.execute(text("SELECT 1"))
+    finally:
+        db.close()
+
+    return {"status": "ready", "version": settings.APP_VERSION}
 
 
 @app.get("/")

@@ -1,15 +1,15 @@
 from typing import List, Optional
 from fastapi import APIRouter, Depends, UploadFile, File, Form, HTTPException, status
 from sqlalchemy.orm import Session
-from backend.app.core.database import get_db
-from backend.app.core.security import get_current_user_id_and_role
-from backend.app.schemas.resume import (
+from app.core.database import get_db
+from app.core.security import get_current_user_id_and_role
+from app.schemas.resume import (
     ResumeResponse,
     ResumeUploadResponse,
     CandidateProfileResponse,
     CandidateProfileUpdate
 )
-from backend.app.services.resume_service import ResumeService
+from app.services.resume_service import ResumeService
 
 router = APIRouter(prefix="/resumes", tags=["Resumes"])
 

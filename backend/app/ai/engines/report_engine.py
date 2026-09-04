@@ -1,5 +1,5 @@
 from typing import List, Dict, Any, Optional
-from backend.app.ai.gateway import ai_gateway
+from app.ai.gateway import ai_gateway
 
 class ReportEngine:
     """Aggregates all evaluation metrics, computes readiness bands, and creates final candidate report."""

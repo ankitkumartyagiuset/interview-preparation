@@ -2,10 +2,10 @@ from datetime import timedelta
 from typing import Dict, Any, Optional
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
-from backend.app.core.security import verify_password, get_password_hash, create_access_token
-from backend.app.repositories.user_repo import UserRepository
-from backend.app.repositories.audit_repo import AuditRepository
-from backend.app.models.user import User
+from app.core.security import verify_password, get_password_hash, create_access_token
+from app.repositories.user_repo import UserRepository
+from app.repositories.audit_repo import AuditRepository
+from app.models.user import User
 
 class AuthService:
     def __init__(self, db: Session):

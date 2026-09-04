@@ -1,16 +1,16 @@
 from typing import List, Optional
 from fastapi import APIRouter, Depends, status, HTTPException
 from sqlalchemy.orm import Session
-from backend.app.core.database import get_db
-from backend.app.core.security import get_current_user_id_and_role
-from backend.app.schemas.interview import (
+from app.core.database import get_db
+from app.core.security import get_current_user_id_and_role
+from app.schemas.interview import (
     InterviewCreate,
     InterviewDetailResponse,
     InterviewStartResponse,
     AnswerSubmit,
     AnswerSubmitResponse
 )
-from backend.app.services.interview_service import InterviewService
+from app.services.interview_service import InterviewService
 
 router = APIRouter(prefix="/interviews", tags=["Interviews"])
 

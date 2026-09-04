@@ -2,8 +2,8 @@ import json
 import re
 import httpx
 from typing import Dict, Any, Optional
-from backend.app.ai.providers.base import AIProvider
-from backend.app.core.config import settings
+from app.ai.providers.base import AIProvider
+from app.core.config import settings
 
 class AnthropicProvider(AIProvider):
     """Anthropic Claude API provider implementation."""

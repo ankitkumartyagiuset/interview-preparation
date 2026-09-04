@@ -1,9 +1,9 @@
 import os
-import pypdf
+from PyPDF2 import PdfReader
 import docx
 from typing import Dict, Any, Optional
-from backend.app.ai.gateway import ai_gateway
-from backend.app.ai.prompts.resume_prompts import RESUME_EXTRACTION_SYSTEM_PROMPT, build_resume_extraction_prompt
+from app.ai.gateway import ai_gateway
+from app.ai.prompts.resume_prompts import RESUME_EXTRACTION_SYSTEM_PROMPT, build_resume_extraction_prompt
 
 class ResumeParserEngine:
     """Extracts raw text from resume documents and generates structured candidate profiles."""
@@ -19,7 +19,7 @@ class ResumeParserEngine:
 
         if ext == ".pdf":
             try:
-                reader = pypdf.PdfReader(file_path)
+                reader = PdfReader(file_path)
                 pages = [page.extract_text() or "" for page in reader.pages]
                 extracted_text = "\n".join(pages)
             except Exception as e:

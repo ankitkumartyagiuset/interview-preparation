@@ -21,7 +21,7 @@ class InterviewCreate(BaseModel):
     total_questions: Optional[int] = 5
     blueprint: Optional[BlueprintConfig] = None
 
-from backend.app.schemas.evaluation import AnswerEvaluationResponse
+from app.schemas.evaluation import AnswerEvaluationResponse
 
 class AnswerResponse(BaseModel):
     id: int

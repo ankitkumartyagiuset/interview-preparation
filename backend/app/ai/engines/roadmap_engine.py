@@ -1,6 +1,6 @@
 from typing import List, Dict, Any, Optional
-from backend.app.ai.gateway import ai_gateway
-from backend.app.ai.prompts.roadmap_prompts import ROADMAP_SYSTEM_PROMPT, build_roadmap_prompt
+from app.ai.gateway import ai_gateway
+from app.ai.prompts.roadmap_prompts import ROADMAP_SYSTEM_PROMPT, build_roadmap_prompt
 
 class RoadmapEngine:
     """Generates 7-day personalized skill gap remediation plans."""

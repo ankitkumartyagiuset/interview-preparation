@@ -1,5 +1,5 @@
 from typing import List, Dict, Any, Optional
-from backend.app.ai.gateway import ai_gateway
+from app.ai.gateway import ai_gateway
 
 LEVEL_WEIGHTS = {
     "beginner": 1,

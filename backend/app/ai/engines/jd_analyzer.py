@@ -1,6 +1,6 @@
 from typing import Dict, Any, Optional
-from backend.app.ai.gateway import ai_gateway
-from backend.app.ai.prompts.jd_prompts import JD_ANALYSIS_SYSTEM_PROMPT, build_jd_analysis_prompt
+from app.ai.gateway import ai_gateway
+from app.ai.prompts.jd_prompts import JD_ANALYSIS_SYSTEM_PROMPT, build_jd_analysis_prompt
 
 class JDAnalyzerEngine:
     """Analyzes job description text and extracts required/preferred competencies."""

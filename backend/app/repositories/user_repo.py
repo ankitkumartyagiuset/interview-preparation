@@ -1,9 +1,9 @@
 from typing import Optional, List
 from sqlalchemy.orm import Session
 from sqlalchemy import func
-from backend.app.models.user import User
-from backend.app.models.resume import Resume
-from backend.app.models.interview import Interview
+from app.models.user import User
+from app.models.resume import Resume
+from app.models.interview import Interview
 
 class UserRepository:
     def __init__(self, db: Session):

@@ -67,10 +67,6 @@ class Settings(BaseSettings):
     LOG_LEVEL: str = "INFO"
     LOG_FORMAT: str = "json"
 
-    # Admin
-    ADMIN_EMAIL: str = "admin@example.com"
-    ADMIN_PASSWORD: str = "change-this-admin-password"
-
     # S3 Storage (Optional)
     USE_S3_STORAGE: bool = False
     S3_BUCKET_NAME: Optional[str] = None

@@ -1,8 +1,8 @@
 import json
 from typing import Dict, Any, List, Optional
-from backend.app.ai.gateway import ai_gateway
-from backend.app.ai.prompts.interview_prompts import INTERVIEW_QUESTION_SYSTEM_PROMPT, build_next_question_prompt
-from backend.app.ai.prompts.evaluation_prompts import FOLLOW_UP_SYSTEM_PROMPT, build_follow_up_prompt
+from app.ai.gateway import ai_gateway
+from app.ai.prompts.interview_prompts import INTERVIEW_QUESTION_SYSTEM_PROMPT, build_next_question_prompt
+from app.ai.prompts.evaluation_prompts import FOLLOW_UP_SYSTEM_PROMPT, build_follow_up_prompt
 
 class QuestionGeneratorEngine:
     """Generates context-aware, non-repetitive adaptive interview questions."""

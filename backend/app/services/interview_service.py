@@ -1,18 +1,18 @@
 from typing import Dict, Any, Optional, List
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
-from backend.app.repositories.interview_repo import InterviewRepository
-from backend.app.repositories.resume_repo import ResumeRepository
-from backend.app.repositories.job_repo import JobRepository
-from backend.app.repositories.report_repo import ReportRepository
-from backend.app.repositories.audit_repo import AuditRepository
-from backend.app.ai.engines.interview_planner import interview_planner_engine
-from backend.app.ai.engines.question_gen import question_generator_engine, follow_up_generator_engine
-from backend.app.ai.engines.answer_evaluator import answer_evaluator_engine
-from backend.app.ai.engines.skill_gap_engine import skill_gap_engine
-from backend.app.ai.engines.roadmap_engine import roadmap_engine
-from backend.app.ai.engines.report_engine import report_engine
-from backend.app.models.interview import Interview, InterviewQuestion, InterviewAnswer
+from app.repositories.interview_repo import InterviewRepository
+from app.repositories.resume_repo import ResumeRepository
+from app.repositories.job_repo import JobRepository
+from app.repositories.report_repo import ReportRepository
+from app.repositories.audit_repo import AuditRepository
+from app.ai.engines.interview_planner import interview_planner_engine
+from app.ai.engines.question_gen import question_generator_engine, follow_up_generator_engine
+from app.ai.engines.answer_evaluator import answer_evaluator_engine
+from app.ai.engines.skill_gap_engine import skill_gap_engine
+from app.ai.engines.roadmap_engine import roadmap_engine
+from app.ai.engines.report_engine import report_engine
+from app.models.interview import Interview, InterviewQuestion, InterviewAnswer
 
 class InterviewService:
     def __init__(self, db: Session):

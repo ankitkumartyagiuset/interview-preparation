@@ -1,7 +1,7 @@
 from typing import Optional, List, Dict, Any
 from sqlalchemy.orm import Session
-from backend.app.models.skill_gap import SkillGap, Roadmap, RoadmapItem
-from backend.app.models.report import Report
+from app.models.skill_gap import SkillGap, Roadmap, RoadmapItem
+from app.models.report import Report
 
 class ReportRepository:
     def __init__(self, db: Session):

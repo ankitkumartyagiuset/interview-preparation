@@ -1,8 +1,8 @@
 from typing import List, Optional, Dict, Any
 from datetime import datetime
 from pydantic import BaseModel
-from backend.app.schemas.skill_gap import SkillGapResponse
-from backend.app.schemas.roadmap import RoadmapResponse
+from app.schemas.skill_gap import SkillGapResponse
+from app.schemas.roadmap import RoadmapResponse
 
 class ReportResponse(BaseModel):
     id: int

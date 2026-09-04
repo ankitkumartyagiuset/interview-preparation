@@ -1,12 +1,12 @@
 from typing import List, Optional
 from fastapi import APIRouter, Depends, status, HTTPException
 from sqlalchemy.orm import Session
-from backend.app.core.database import get_db
-from backend.app.core.security import get_current_user_id_and_role
-from backend.app.schemas.report import ReportResponse
-from backend.app.schemas.roadmap import RoadmapResponse, RoadmapItemResponse
-from backend.app.schemas.skill_gap import SkillGapResponse
-from backend.app.repositories.report_repo import ReportRepository
+from app.core.database import get_db
+from app.core.security import get_current_user_id_and_role
+from app.schemas.report import ReportResponse
+from app.schemas.roadmap import RoadmapResponse, RoadmapItemResponse
+from app.schemas.skill_gap import SkillGapResponse
+from app.repositories.report_repo import ReportRepository
 
 router = APIRouter(prefix="/reports", tags=["Reports & Roadmaps"])
 

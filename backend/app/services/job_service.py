@@ -1,10 +1,10 @@
 from typing import List, Dict, Any, Optional
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
-from backend.app.repositories.job_repo import JobRepository
-from backend.app.repositories.resume_repo import ResumeRepository
-from backend.app.ai.engines.jd_analyzer import jd_analyzer_engine
-from backend.app.models.job import JobRole, JobDescription
+from app.repositories.job_repo import JobRepository
+from app.repositories.resume_repo import ResumeRepository
+from app.ai.engines.jd_analyzer import jd_analyzer_engine
+from app.models.job import JobRole, JobDescription
 
 class JobService:
     def __init__(self, db: Session):

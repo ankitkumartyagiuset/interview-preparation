@@ -1,9 +1,9 @@
 from typing import Dict, Any, List
 from sqlalchemy.orm import Session
-from backend.app.repositories.interview_repo import InterviewRepository
-from backend.app.repositories.report_repo import ReportRepository
-from backend.app.repositories.user_repo import UserRepository
-from backend.app.models.user import User
+from app.repositories.interview_repo import InterviewRepository
+from app.repositories.report_repo import ReportRepository
+from app.repositories.user_repo import UserRepository
+from app.models.user import User
 
 class DashboardService:
     def __init__(self, db: Session):

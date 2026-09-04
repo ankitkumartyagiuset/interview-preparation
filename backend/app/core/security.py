@@ -5,8 +5,8 @@ from passlib.context import CryptContext
 from fastapi import Depends, HTTPException, status, Request
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from sqlalchemy.orm import Session
-from backend.app.core.config import settings
-from backend.app.core.database import get_db
+from app.core.config import settings
+from app.core.database import get_db
 
 import bcrypt
 

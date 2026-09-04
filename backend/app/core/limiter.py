@@ -1,7 +1,7 @@
 import time
 from collections import defaultdict
 from fastapi import Request, HTTPException, status
-from backend.app.core.config import settings
+from app.core.config import settings
 
 class RateLimiter:
     """Sliding-window rate limiter with in-memory storage."""

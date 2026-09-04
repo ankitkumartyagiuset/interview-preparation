@@ -1,6 +1,6 @@
 from typing import Optional, List, Dict, Any
 from sqlalchemy.orm import Session
-from backend.app.models.resume import (
+from app.models.resume import (
     Resume,
     CandidateProfile,
     CandidateSkill,

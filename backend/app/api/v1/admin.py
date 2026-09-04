@@ -1,10 +1,10 @@
 from typing import List
 from fastapi import APIRouter, Depends, status, HTTPException
 from sqlalchemy.orm import Session
-from backend.app.core.database import get_db
-from backend.app.core.security import require_role
-from backend.app.schemas.admin import AdminAnalyticsResponse, AdminUserItem
-from backend.app.services.admin_service import AdminService
+from app.core.database import get_db
+from app.core.security import require_role
+from app.schemas.admin import AdminAnalyticsResponse, AdminUserItem
+from app.services.admin_service import AdminService
 
 router = APIRouter(prefix="/admin", tags=["Admin Operations"], dependencies=[Depends(require_role(["admin"]))])
 
