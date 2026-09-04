@@ -281,6 +281,18 @@ Python version with published wheels instead of attempting a Rust build in
 Render's build environment. If configuring the service manually, set the same
 `PYTHON_VERSION` environment variable and use the `backend` root directory.
 
+For an existing Render Web Service, replace any Python code in **Start Command**
+with exactly:
+
+```bash
+uvicorn app.main:app --host 0.0.0.0 --port $PORT
+```
+
+Set **Build Command** to `pip install -r requirements.txt`, set **Root
+Directory** to `backend`, and deploy the latest `main` commit. Do not use
+`app = FastAPI()` as a Render command; that is application source code, not a
+shell command.
+
 For Vercel, create a project with `frontend` as its Root Directory and deploy
 it as a static site. Before deploying, replace the placeholder URL in
 `frontend/config.js` with the public Render backend URL:
