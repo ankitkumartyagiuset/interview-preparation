@@ -275,7 +275,7 @@ Redis. In Render, create a Blueprint from this repository and set the
 CORS_ORIGINS=["https://your-app.vercel.app"]
 ```
 
-The Blueprint sets `PYTHON_VERSION=3.11.9` and runs `alembic upgrade head`
+The Blueprint sets `PYTHON_VERSION=3.12.8` and runs `alembic upgrade head`
 before starting the service. This keeps the locked Pydantic dependencies on a
 Python version with published wheels instead of attempting a Rust build in
 Render's build environment. If configuring the service manually, set the same
